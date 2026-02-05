@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:test/auth/controllers/auth_controller.dart';
 import 'package:test/auth/views/otp_verify.dart';
 
@@ -112,7 +113,11 @@ class AuthPage extends StatelessWidget {
                     return GestureDetector(
                       onTap: enebled
                           ? () {
-                              AuthController().sendOtp(phoneController.text);
+                              final auth = Provider.of<AuthController>(
+                                context,
+                                listen: false,
+                              );
+                              auth.sendOtp(phoneController.text);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

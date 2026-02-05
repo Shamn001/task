@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:test/auth/controllers/auth_controller.dart';
+import 'package:test/auth/models/auth_model.dart';
 import 'package:test/users/controllers/user_controller.dart';
 import 'package:test/users/models/user_model.dart';
 import 'package:test/users/views/home/home.dart';
@@ -12,10 +13,14 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(UserAdapter());
   await Hive.openBox<User>('users');
-
+  Hive.registerAdapter(UserModelAdapter());
+  await Hive.openBox<UserModel>('user');
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => UserController(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserController()),
+        ChangeNotifierProvider(create: (_) => AuthController()),
+      ],
       child: const MyApp(),
     ),
   );
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
       ),
       home: Consumer<AuthController>(
         builder: (context, controller, _) {
-          return controller.phone != null ? const HomeView() : AuthPage();
+          return controller.isLoggedIn ? const HomeView() : AuthPage();
         },
       ),
     );

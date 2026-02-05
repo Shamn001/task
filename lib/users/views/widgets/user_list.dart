@@ -21,6 +21,7 @@ class UserList extends StatelessWidget {
             return Card(
               margin: const EdgeInsets.symmetric(vertical: 6),
               child: ListTile(
+                tileColor: Colors.white,
                 leading: const CircleAvatar(child: Icon(Icons.person)),
                 title: Text(user.name),
                 subtitle: Text('Age: ${user.age}'),

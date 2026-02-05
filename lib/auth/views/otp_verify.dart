@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 import 'package:test/auth/controllers/auth_controller.dart';
-import 'package:test/users/views/home/home.dart';
 
 class OtpVerify extends StatefulWidget {
   const OtpVerify({super.key});
@@ -12,7 +12,6 @@ class OtpVerify extends StatefulWidget {
 }
 
 class _OtpVerifyState extends State<OtpVerify> {
-  final AuthController controller = AuthController();
   final TextEditingController otpController = TextEditingController();
 
   int secondsRemaining = 60;
@@ -59,6 +58,7 @@ class _OtpVerifyState extends State<OtpVerify> {
 
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthController>(context, listen: false);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -81,7 +81,7 @@ class _OtpVerifyState extends State<OtpVerify> {
               const SizedBox(height: 10),
 
               Text(
-                'Enter the verification code sent to +91${controller.phone?.padLeft(10, '*') ?? ''}',
+                'Enter the verification code sent to +91${auth.phone?.padLeft(10, '*') ?? ''}',
               ),
 
               const SizedBox(height: 30),
@@ -126,7 +126,7 @@ class _OtpVerifyState extends State<OtpVerify> {
                 child: GestureDetector(
                   onTap: canResend
                       ? () {
-                          controller.sendOtp(controller.phone!);
+                          auth.sendOtp(auth.phone!);
                           startTimer();
                         }
                       : null,
@@ -144,12 +144,8 @@ class _OtpVerifyState extends State<OtpVerify> {
 
               GestureDetector(
                 onTap: () {
-                  if (controller.verifyOtp(otpController.text)) {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(builder: (_) => HomeView()),
-                      (route) => false,
-                    );
+                  if (auth.verifyOtp(otpController.text)) {
+                    Navigator.pop(context);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Invalid OTP')),
