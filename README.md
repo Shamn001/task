@@ -3,15 +3,43 @@
 
 A new Flutter project.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🔐 Mock OTP
 
-A few resources to get you started if this is your first Flutter project:
+```
+OTP: 123456
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+> Used only for testing. No real SMS/OTP service is integrated.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+---
+
+## 🖼️ Screenshots
+
+* Phone Number Screen
+  ![Phone](assets/images/phone_screen.png)
+
+* OTP Verification Screen
+  ![OTP](assets/images/otp_screen.png)
+
+* Home Screen
+  ![Home](assets/images/home_screen.png)
+
+---
+
+## 🛠️ Tech Stack
+
+* Flutter & Dart
+* Hive (partial)
+* Provider
+
+---
+
+## 🚧 Status
+
+* Auth flow: Done (mock)
+* OTP integration: Not implemented
+* Data storage: Partial
+
+---
